@@ -1,5 +1,3 @@
-package com.ola;
-
 import com.ola.controller.RegistrationCourseController;
 
 public class main {
@@ -8,6 +6,6 @@ public class main {
 
         RegistrationCourseController controller=new RegistrationCourseController();
 
-        controller.register("3","2");
+        controller.register("3","1");
     }
 }

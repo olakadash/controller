@@ -15,15 +15,15 @@ import java.util.List;
 
 public class RegistrationCourseController {
 
-    private ScheduleDAO   scheduleDAO ;
-    private StudentDAO    studentDAO  ;
-    private CourseDAO     courseDAO   ;
+       ScheduleDAO   scheduleDAO ;
+       StudentDAO    studentDAO  ;
+       CourseDAO     courseDAO   ;
 
     public RegistrationCourseController() {
 
         this.scheduleDAO=new ScheduleDAOImpl("jdbc:mysql://localhost:3306/student1?useSSL=false","root", "root@JEA");
         this.courseDAO=new CourseDAOImpl("jdbc:mysql://localhost:3306/student1?useSSL=false", "root", "root@JEA");
-        this.studentDAO=new StudentDAOImpl("jdbc:`mysql://localhost:3306/student1?useSSL=false", "root", "root@JEA");
+        this.studentDAO=new StudentDAOImpl("jdbc:mysql://localhost:3306/student1?useSSL=false", "root", "root@JEA");
     }
 
      public void register(String studentId,String courseId){
