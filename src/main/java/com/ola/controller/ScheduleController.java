@@ -68,12 +68,29 @@ public class ScheduleController {
 
         }
 
+
         scheduleDAO.deleteSchedule(studentId,courseId);
 
         return "course deleted ";
     }
 
-    public String deleteScheduleByAdmin(String studentId, String courseId){
+    public String deleteScheduleByAdmin(String adminId,String studentId, String courseId){
+
+        Student user=studentDAO.findById(adminId);
+
+        if (user==null || !("admin".equals(user.getUserType())) ){
+
+            throw new RuntimeException("you not have permission to delete ");
+        }
+
+        Student student=studentDAO.findById(studentId);
+
+        Course course=courseDAO.findCourseById(courseId);
+
+        if (student==null || course==null ){
+
+            throw new RuntimeException("student or courseId not found ");
+        }
 
         scheduleDAO.deleteSchedule(studentId,courseId);
 

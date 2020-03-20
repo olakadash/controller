@@ -16,7 +16,7 @@ public class main {
 
         LoginController controller1=new LoginController("jdbc:mysql://localhost:3306/student1?useSSL=false","root", "root@JEA");
 
-       // controller1.isSignUp("1","123");
+        controller1.isSignUp("1","123");
 
         CoursesController coursesController=new CoursesController("jdbc:mysql://localhost:3306/student1?useSSL=false","root", "root@JEA");
             /*List<Course> courses=coursesController.showCourse();
@@ -35,7 +35,7 @@ public class main {
         serviceParam.put(Constants.EMAIL.getValue(),"al@l1");
         serviceParam.put(Constants.PASSWORD.getValue(),"123");
 
-        SignUpController controller2=new SignUpController("jdbc:mysql://localhost:3306/student1?useSSL=false","root","root@JEA");
+        StudentController controller2=new StudentController("jdbc:mysql://localhost:3306/student1?useSSL=false","root","root@JEA");
 
         //System.out.println(controller2.signUpClient(serviceParam));
 
@@ -57,6 +57,6 @@ public class main {
              System.out.println(courses.get(i));
          }*/
 
-      scheduleController.deleteScheduleByUser("3","2");
+      //scheduleController.deleteScheduleByUser("3","2");
     }
 }

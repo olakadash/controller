@@ -9,11 +9,11 @@ import com.ola.utils.Constants;
 import java.time.Year;
 import java.util.Map;
 
-public class SignUpController {
+public class StudentController {
 
     private StudentDAO studentDAO;
 
-    public SignUpController(String url,String userName,String password) {
+    public StudentController(String url,String userName,String password) {
 
         this.studentDAO=new StudentDAOImpl(url,userName,password);
 
@@ -47,6 +47,7 @@ public class SignUpController {
             throw new RuntimeException("can not save null value password ");
         }
 
+        param.put(Constants.USER_TYPE.getValue(),"student");
          studentDAO.save(student(param));
 
         return "successfully registered ";
@@ -58,7 +59,28 @@ public class SignUpController {
 
       return   BuildStudentBuilderConstructor.buildStudentFromUserInput(param.get(Constants.STUDENT_ID.getValue()),
               param.get(Constants.FIRST_NAME.getValue()),param.get(Constants.LAST_NAME.getValue()), param.get(Constants.EMAIL.getValue())
-                      ,param.get(Constants.PASSWORD.getValue()), String.valueOf(Year.now()));
+                      ,param.get(Constants.PASSWORD.getValue()), String.valueOf(Year.now()),param.get(Constants.USER_TYPE.getValue()));
 
+    }
+
+    public String deleteStudentByAdmin(String adminId,String studentId){
+
+        Student user=studentDAO.findById(adminId);
+
+        if (user==null || !("admin".equals(user.getUserType())) ){
+
+            throw new RuntimeException("you not have permission to delete ");
+        }
+
+        Student student=studentDAO.findById(studentId);
+
+        if (student==null ){
+
+            throw new RuntimeException("student or courseId not found ");
+        }
+
+        studentDAO.deleteStudentById(studentId);
+
+        return "Student deleted ";
     }
 }

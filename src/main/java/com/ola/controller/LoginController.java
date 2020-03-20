@@ -4,10 +4,12 @@ import com.ola.registration.model.dao.LoginDAO;
 import com.ola.registration.model.dao.StudentDAO;
 import com.ola.registration.model.dao.daoimpl.LoginDAOImpl;
 import com.ola.registration.model.dao.daoimpl.StudentDAOImpl;
+import com.ola.registration.model.entity.Course;
 import com.ola.registration.model.entity.Login;
 import com.ola.registration.model.entity.Student;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class LoginController {
 
@@ -46,12 +48,49 @@ public class LoginController {
 
           loginDAO.save(new Login(studentId,token,LocalDateTime.now()));
 
+          String user=student.getUserType();
 
-      return token;
+
+        return token+"\t"+user;
     }
 
-    private String token() {
+      private String token() {
 
         return String.valueOf(1000 +(int)(Math.random()*(9999-1000+1)));
+    }
+
+    public String deleteLoginStudent(String adminId,String studentId){
+
+        Student user=studentDAO.findById(adminId);
+
+        if (user==null || !("admin".equals(user.getUserType())) ){
+
+            throw new RuntimeException("you not have permission to delete ");
+        }
+
+        Student student=studentDAO.findById(studentId);
+
+        if (student==null ){
+
+            throw new RuntimeException("student or courseId not found ");
+        }
+
+        loginDAO.deleteLogged(studentId);
+
+        return "student logged deleted ";
+
+    }
+    public List<Login> showLoginStudent(String adminId){
+
+        Student user=studentDAO.findById(adminId);
+
+        if (user==null || !("admin".equals(user.getUserType())) ){
+
+            throw new RuntimeException("you not have permission to delete ");
+        }
+
+         List<Login> listLogin=loginDAO.showLogin();
+
+        return listLogin;
     }
 }
